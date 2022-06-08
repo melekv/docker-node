@@ -1,0 +1,40 @@
+header, footer {
+    background-color: #c5b5b5;
+    padding: 20px;
+    flex-shrink: 0;
+    text-align: center;
+}
+
+header {
+    font-size: 1.5rem;
+}
+
+.flexy {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1 0 auto;
+}
+
+.card-form {
+    width: 30%;
+    border: 1px solid #9a9a9a;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.container-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    column-gap: 20px;
+    row-gap: 20px;
+}
+
+.btn-hidden, .div-hidden {
+    display: none;
+}
