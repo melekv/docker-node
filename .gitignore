@@ -1,3 +1,4 @@
 db/
 !db/.gitkeep
 node/node_modules
+.idea

@@ -11,14 +11,16 @@ services:
       - db
     env_file:
       - ./.env
+
   db:
-    image: mysql
+    image: mysql:8
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASS}
       - MYSQL_DATABASE=${DB_NAME}
     volumes:
       - ./db:/var/lib/mysql
+
   phpmyadmin:
-    image: phpmyadmin
+    image: phpmyadmin:5
     ports:
       - ${MYADMIN_PORT_HOST}:${MYADMIN_PORT_CONTAINER}

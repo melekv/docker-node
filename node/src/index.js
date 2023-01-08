@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 3000;
 
 app.get('/', async (req, res) => {
     const cards = await cardModel.all();
-    res.render('index', {cards: cards});
+    res.render('index', { cards: cards });
 });
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
