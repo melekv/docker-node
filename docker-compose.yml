@@ -1,12 +1,13 @@
-version: "3.8"
+version: "3"
 
 services:
   node-app:
-    build: ./node
+    build: ./
+    container_name: ${APP_NAME}_server
     ports:
       - ${NODE_APP_PORT_HOST}:${NODE_APP_PORT_CONTAINER}
     volumes:
-      - ./node/src:/app/src
+      - ./node:/app
     depends_on:
       - db
     env_file:
@@ -14,6 +15,7 @@ services:
 
   db:
     image: mysql:8
+    container_name: ${APP_NAME}_mysql
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASS}
       - MYSQL_DATABASE=${DB_NAME}
@@ -22,5 +24,6 @@ services:
 
   phpmyadmin:
     image: phpmyadmin:5
+    container_name: ${APP_NAME}_admin
     ports:
       - ${MYADMIN_PORT_HOST}:${MYADMIN_PORT_CONTAINER}

@@ -36,6 +36,6 @@ const remove = (req, res) => {
     res.status(200).send({error: false, msg: 'Successfully deleted card'});
 };
 
-module.exports = {
+export {
     show, add, find, remove, put
 };

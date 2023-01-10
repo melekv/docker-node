@@ -1,4 +1,4 @@
-const mysql = require('mysql2');
+import mysql from 'mysql2';
 
 const db = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -56,6 +56,6 @@ const remove = (id) => {
     db.execute(sql, [id]);
 };
 
-module.exports = {
+export {
     all, find, add, remove, update
 };

@@ -1,11 +1,11 @@
-const express = require('express');
+import express from 'express';
 
-const cardRoutes = require('./routes/cardRoutes.js');
-const cardModel = require('./models/cardModel.js');
+import cardRoutes from './routes/cardRoutes.js';
+import { all, find, add, remove, update } from './models/cardModel.js';
 
 const app = express();
 app.set('view engine', 'ejs');
-app.set('views', '/app/src/views');
+app.set('views', '/app/views');
 
 app.use(express.static(__dirname + '/css'));
 app.use(express.static(__dirname + '/js'));
@@ -16,7 +16,7 @@ app.use('/card', cardRoutes);
 const PORT = process.env.PORT || 3000;
 
 app.get('/', async (req, res) => {
-    const cards = await cardModel.all();
+    const cards = await all();
     res.render('index', { cards: cards });
 });
 
