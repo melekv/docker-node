@@ -1,6 +1,13 @@
-import mysql from 'mysql2';
+import mysql, {Connection, FieldPacket, OkPacket, ResultSetHeader, RowDataPacket} from 'mysql2';
 
-const db = mysql.createConnection({
+interface Body {
+    id: number,
+    name: string,
+    surname: string,
+    isActive: boolean
+}
+
+const db: Connection = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
@@ -14,13 +21,13 @@ db.connect(err => {
 });
 
 const all = async () => {
-    const result = await db.promise().query('SELECT * FROM cards');
+    const result: [(RowDataPacket[][] | RowDataPacket[] | OkPacket | OkPacket[] | ResultSetHeader), FieldPacket[]] = await db.promise().query('SELECT * FROM cards');
 
     return result[0];
 };
 
-const find = async (id) => {
-    const [result] = await db.promise().execute(
+const find = async (id: number) => {
+    const [result]: any = await db.promise().execute(
         'SELECT * FROM cards WHERE id = ? LIMIT 1',
         [id]
     );
@@ -28,7 +35,7 @@ const find = async (id) => {
     return result[0];
 };
 
-const add = (body) => {
+const add = (body: Body) => {
     db.execute(
         'INSERT INTO cards(name, surname, active) VALUES(?, ?, ?)',
         [body.name, body.surname, body.isActive],
@@ -38,9 +45,7 @@ const add = (body) => {
     );
 };
 
-const update = (id, body) => {
-    console.log(id);
-    console.log(body);
+const update = (id: number, body: Body) => {
     db.execute(
         'UPDATE cards SET name = ?, surname = ?, active = ? WHERE id = ?',
         [body.name, body.surname, body.isActive, id],
@@ -50,8 +55,7 @@ const update = (id, body) => {
     );
 };
 
-const remove = (id) => {
-    console.log(id);
+const remove = (id: number) => {
     const sql = 'DELETE FROM cards WHERE id = ?';
     db.execute(sql, [id]);
 };
