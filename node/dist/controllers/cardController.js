@@ -1,32 +1,50 @@
-import { all, find, add, remove, update } from '../models/cardModel.js';
-const show = async (req, res) => {
-    const result = await all();
-    res.status(200).send(result);
+import appDataSource from "../app-data-source.js";
+import { Cards } from "../entities/Cards.js";
+const find = async (req, res) => {
+    const cardsRepository = appDataSource.getRepository(Cards);
+    const card = await cardsRepository.findOneBy({
+        id: parseInt(req.params.id)
+    });
+    res.status(200).send(card);
 };
-const find1 = async (req, res) => {
-    const id = parseInt(req.params.id);
-    const result = await find(id);
-    res.status(200).send(result);
-};
-const add1 = (req, res) => {
+const add = async (req, res) => {
     if (!req.body.name)
-        res.status(500).send({ error: true, msg: 'Wrong name!' });
+        res.status(500)
+            .send({ error: true, msg: 'Wrong name!' });
     if (!req.body.surname)
-        res.status(500).send({ error: true, msg: 'Wrong surname!' });
-    add(req.body);
+        res.status(500)
+            .send({ error: true, msg: 'Wrong surname!' });
+    const cardsRepository = appDataSource.getRepository(Cards);
+    const card = new Cards();
+    card.name = req.body.name;
+    card.surname = req.body.surname;
+    card.active = req.body.isActive;
+    await cardsRepository.save(card);
     res.status(200).send({ error: false, msg: 'Successfully added card! ' });
 };
-const put = (req, res) => {
+const put = async (req, res) => {
     if (!req.body.name)
         res.status(500).send({ error: true, msg: 'Wrong name!' });
     if (!req.body.surname)
         res.status(500).send({ error: true, msg: 'Wrong surname!' });
-    update(parseInt(req.params.id), req.body);
+    const cardsRepository = appDataSource.getRepository(Cards);
+    const card = await cardsRepository.findOneBy({
+        id: parseInt(req.params.id)
+    });
+    if (card === null)
+        res.status(500).send({ error: true, msg: 'Card not found!' });
+    if (card instanceof Cards) {
+        card.name = req.body.name;
+        card.surname = req.body.surname;
+        card.active = req.body.isActive;
+        await cardsRepository.save(card);
+    }
     res.status(200).send({ error: false, msg: 'Successfully changed card!' });
 };
-const remove1 = (req, res) => {
-    remove(parseInt(req.params.id));
+const remove = async (req, res) => {
+    const cardsRepository = appDataSource.getRepository(Cards);
+    await cardsRepository.delete(parseInt(req.params.id));
     res.status(200).send({ error: false, msg: 'Successfully deleted card' });
 };
-export { show, add1, find1, remove1, put };
+export { add, find, remove, put };
 //# sourceMappingURL=cardController.js.map

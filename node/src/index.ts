@@ -1,8 +1,8 @@
 import express, { Application, Request, Response } from 'express';
-import * as url from 'url';
+import appDataSource from './app-data-source.js';
+import { Cards } from "./entities/Cards.js";
 
 import router from './routes/cardRoutes.js';
-import { all } from './models/cardModel.js';
 
 const app: Application = express();
 app.set('view engine', 'ejs');
@@ -17,7 +17,8 @@ app.use('/card', router);
 const PORT: number | string = process.env.PORT || 3000;
 
 app.get('/', async (req: Request, res: Response) => {
-    const cards = await all();
+    const cards = await appDataSource.manager.find(Cards);
+
     res.render('index', { cards: cards });
 });
 
