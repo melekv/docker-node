@@ -1,6 +1,8 @@
 # docker-node
 Simple API app using Node with Express framework and MySQL database. Example project to show my experience with Node.
 
+In early 2023 the project was rewritten using TypeScript and an ORM TypeORM.
+
 ## General info
 This app allowes to add user cards with their name. All CRUD operations are implemented.
 
@@ -8,15 +10,17 @@ This app allowes to add user cards with their name. All CRUD operations are impl
 Project is created with:
 * Node
 * MySQL
-* Express
+* Express (**new**: using TypeScript)
 * EJS templeting engine
 * Docker
+* Database ORM: TypeORM (**new**)
 
 ## Setup
 To run this project use docker:
 ```
 cd ./docker-node
 docker-compose up -d
+goto: http://localhost:3000
 ```
 
 ## Project status
