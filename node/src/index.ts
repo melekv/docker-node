@@ -8,8 +8,8 @@ const app: Application = express();
 app.set('view engine', 'ejs');
 app.set('views', '/app/views');
 
-app.use(express.static('/app/css'));
-app.use(express.static('/app/js'));
+app.use(express.static('/app/assets/css'));
+app.use(express.static('/app/assets/js'));
 app.use(express.json());
 
 app.use('/card', router);
